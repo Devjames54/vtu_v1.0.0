@@ -1,0 +1,135 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile and State",
+      "description": "User specific data, wallet balance, transaction history, referrals, and notifications.",
+      "type": "object",
+      "properties": {
+        "wallet_balance": {
+          "type": "number",
+          "description": "Current wallet balance of the user."
+        },
+        "reward_points": {
+          "type": "number",
+          "description": "Current reward points of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address."
+        },
+        "password": {
+          "type": "string",
+          "description": "User account security credential."
+        },
+        "full_name": {
+          "type": "string",
+          "description": "User full name."
+        },
+        "phone": {
+          "type": "string",
+          "description": "User mobile phone number."
+        },
+        "username": {
+          "type": "string",
+          "description": "User profile handle."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Registration ISO timestamp."
+        },
+        "referred_friends": {
+          "type": "array",
+          "description": "Array of referred friends."
+        },
+        "notifications_list": {
+          "type": "array",
+          "description": "List of user notifications."
+        },
+        "transactions": {
+          "type": "array",
+          "description": "Array of transaction history."
+        },
+        "lastSynced": {
+          "type": "string",
+          "description": "ISO timestamp of the last cloud synchronization."
+        }
+      },
+      "required": []
+    },
+    "SystemSettings": {
+      "title": "Global System Settings",
+      "description": "Global application configuration for VTU services, latency, maintenance and discounts.",
+      "type": "object",
+      "properties": {
+        "maintenanceMode": {
+          "type": "boolean"
+        },
+        "globalDiscount": {
+          "type": "number"
+        },
+        "apiLatency": {
+          "type": "number"
+        },
+        "providerStatuses": {
+          "type": "object"
+        },
+        "systemAlert": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        }
+      },
+      "required": []
+    },
+    "AdminActivityLog": {
+      "title": "Admin Audit Activity Log",
+      "description": "Records all modifications, additions, and deletions made to payment gateways and aggregators by administrators for governance and accountability.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "adminEmail": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        },
+        "targetType": {
+          "type": "string"
+        },
+        "targetId": {
+          "type": "string"
+        },
+        "targetName": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "timestamp", "adminEmail", "action", "targetType"]
+    }
+  },
+  "firestore": {
+    "/users/{email}": {
+      "schema": "User",
+      "description": "Collection of users identified by their lowercase email address."
+    },
+    "/system/{configId}": {
+      "schema": "SystemSettings",
+      "description": "Document holding the global settings for the VTU system."
+    },
+    "/admin_activity_logs/{logId}": {
+      "schema": "AdminActivityLog",
+      "description": "Chronological audit log recording administrator changes to payment gateways and aggregators."
+    }
+  }
+}

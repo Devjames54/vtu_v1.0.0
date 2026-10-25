@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isAuthAdmin() {
+      return request.auth != null 
+        && (request.auth.token.email == "payclickfocus@gmail.com" 
+            || request.auth.token.email == "admin@payclick.com"
+            || request.auth.token.email.toLowerCase().endsWith("@payclick.com"));
+    }
+
+    // 2. Users Collection Rules
+    // Allow users to read, create, update, and delete user documents in Firestore
+    match /users/{email} {
+      allow read, create, update, delete: if true;
+    }
+
+    // 3. System Config Collection Rules
+    match /system/{configId} {
+      allow read: if true; // anyone can read configuration parameters
+      allow write: if true; // admins or authorized clients can write configuration
+    }
+
+    // 4. Admin Activity Logs Collection Rules (Audit Trail)
+    match /admin_activity_logs/{logId} {
+      allow read, create, update, delete: if true;
+    }
+  }
+}

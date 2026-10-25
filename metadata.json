@@ -1,0 +1,6 @@
+{
+  "name": "PayClick",
+  "description": "Premium top-up app for instant Airtime, Data, Bills, and Rewards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
